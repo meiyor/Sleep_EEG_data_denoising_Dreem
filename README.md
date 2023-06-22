@@ -109,7 +109,7 @@ From this point, we can detect 1) **sleep spindles** using the **Wavelet-based m
 
 The parameters in this function are defined and taken from the function comment section. Here we explained all the input parameters in sequence:
 
- - **data**: an array composed between channels **(in this case four- 4) x samples-length** and it is the fraction of EEG data you/user want to use to infer where are the sleep spindles.
+ - **data**: an array composed between channels **(in this case four- 4) x samples-length** and it is the fraction of EEG data you/user want to use to infer the position and duration of the sleep spindles.
  - **time**: this is an array of size **samples-length** having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
  - **fs** : sampling frequency being 250Hz for this particular case
  - **nbchan**: four (4) for this particular case
