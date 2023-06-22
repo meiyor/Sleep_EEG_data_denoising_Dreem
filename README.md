@@ -74,7 +74,7 @@ This will download all the EEG data as **.edf** file that's why the **Biosig3.3.
 
 <img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_hypnogram.jpg" width="900" height="400">
 
-Both files **.edf** and **.txt** will have the same trial code and the time duration as name. In the **data** folder of this repository I added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****.
+Both files **.edf** and **.txt** will have the same trial-code and the time duration as strings joined as a name. In the **data** folder of this repository we added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****.
 
 **3) Executing code**
 
@@ -91,24 +91,24 @@ Now in order to run the code for processing the EEG data, transform it to unipol
 ```matlab
    >> [Sal_filtered,Sal,Result]=windowing_sleep_EEG('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf',4,2,0,250);
 ```
-The first parameter of this command is the name of the .edf file - that has the hypnogram calculated associated, the second parameter is the length of the window that the denoising process is done,- I suggest **4 seconds**, the third parameter is the overlap setting in seconds - I suggest  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising by default it is **0 seconds** but the user can change it for convinience, and the fifth parameter is the sampling-frequency of these sleep trials which is **250Hz***.
+The first parameter of this command is the name of the .edf file - that has the hypnogram calculated associated, the second parameter is the length of the window that the denoising process is done,- We suggest **4 seconds**, the third parameter is the overlap setting in seconds - We suggest  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising by default it is **0 seconds** but the user can change it for convinience, and the fifth parameter is the sampling-frequency of these sleep trials which is **250Hz***.
 
 This process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **sws** detection from a interim denoised signal depending what the user wants to measure.
 
 **4) Detect Sleep Spindles and SWS**
 
-In this step we will assume that the **start_param** and **end_param** are the start and end time, **in seconds**, that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first asume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
+ In this step we will assume that the **start_param** and **end_param** are the start and end time, **in seconds**, that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first assume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
 
 ```matlab
    >> times=linspace(start_param,end_param,length(squeeze(Sal(1,start_param*250:end_param*250))));
 ```
-From this point, we can detect 1) **sleep spindles** using the **Wavelet-based method** defined in [**SpindleTool**](https://github.com/nsrr/SpindleTool). We modifiy this code to make the detection more efficient and more adaptable to the resulting signals ontained in **Sal**. Now, we can execute the code defined in the file **sleep_spindle_detector_wavelet.m** following the next Matlab command.
+From this point, we can detect 1) **sleep spindles** using the **Wavelet-based method** defined in [**SpindleTool**](https://github.com/nsrr/SpindleTool). We modified this code to make the detection more efficient and more adaptable to the resulting signals obtained in **Sal**, with **4** channels and a variable **sample-length**. Now, we can execute the code defined in the file **sleep_spindle_detector_wavelet.m** following the next Matlab command and we can calculate/define the **duration** and **density** per minute of the sleep spindles between the **start_param** and **end_param**.
 
 ```matlab
    >> [timespindles,durspindles,MINS,DENS,time_SS,dur_SS,dens_SS]=sleep_spindle_detector_wavelet(Sal(:,start_param*250:end_param*250),times,250,4,0,4,0.3,0.5,11);
 ```
 
-The parameters in this function are defined and taken from the function comments here. Here we explained all the input parameters in sequence:
+The parameters in this function are defined and taken from the function comment section. Here we explained all the input parameters in sequence:
 
  - **data**: an array composed between channels **(in this case four- 4) x sample-length** and it is the fraction of EEG data you want to use to infer where are the sleep spindles.
  - **time**: this is an array of size **sample-length** having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
@@ -130,8 +130,21 @@ The output parameters for the spindle detection function are defined here in the
  - **dur_SS**: a sorted array grouping the spindles duration times detected for each channel. The array is sorted from low to high in seconds reporting the spindles duration. The length of time_SS and dur_SS are equal.
  - **dens_SS**: a number representing the density of spindles detected per minute in the entire trial after grouping all the different spindles detected for each channel.
 
-If you want to plot the desired channel parameters with the detected spindles plot on hold you can use the following Matlab command. This happened when the sel_plot parameter is 1.
+If you want to plot the desired channel parameters with the detected spindles plot on hold you can use the following Matlab command. This occurs when the **sel_plot** parameter is 1.
 
-``matlab
+```matlab
    >> [timespindles,durspindles,MINS,DENS,time_SS,dur_SS,dens_SS]=sleep_spindle_detector_wavelet(Sal(:,start_param*250:end_param*250),times,250,4,1,4,0.3,0.5,11);
 ```
+Now, for detecting **SWS** we used the [**swa-matlab**](https://github.com/Mensen/swa-matlab) toolbox with certain variations in the code to make it more adaptable to the data we have with **4** channels and a variable **sample-length**. The following command in Matlab will execute the detection of **SWS** between the **start_param** and **end_param**. This command will also report the canonical **SWS** output obtained from the **4** channels included in the analysis and the **incidence** or the density of **SWS** detected per minute - similar to the spindles detection.
+
+```matlab
+   >> [SW,incidence]=detect_sws(Sal(:,start_param*250:end_param*250),times,250,0);
+```
+
+The input parameters of this function will be listed here as we have set them in the comments section of the corresponding code:
+
+ - **data**: an array composed of channels (in this case four- 4) x samples-length and it is the fraction of EEG data you want to use to infer where are the sleep spindles.
+ - **time**: this is an array of size samples-length having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the **data input parameter.
+ - **fs**: sampling frequency being 250Hz for this particular case
+ - **sel_plot**: 0 if you don't want to plot the SWS detected holded on your EEG data, and 1 if you want to plot the SWS detected holded on your input EEG data plotted as well.
+
