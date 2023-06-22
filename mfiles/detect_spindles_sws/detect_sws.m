@@ -4,6 +4,9 @@ function [SW,incidence]=detect_sws(data,times,fs,sel_plot)
 %% time: this is an array of size time having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
 %% fs: sampling frequency being 250Hz for this particular case
 %% sel_plot: 0 if you don't want to plot the SWS holded in your EEG data, and 1 if you want to plot the SWS holded on your input data.
+%% %% the input parameters set for this code are the following
+%% SW: structure containing the SWS canonical representation calculated from the 4 channels and the swa-matlab toolbox.
+%% incidence: this is a number representing the number of SWS detected per minute across the trial input given for analysis.
 close all;
 ttime=linspace(times(1),times(end),length(times));
 Sal=eeg_emptyset();
