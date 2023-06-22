@@ -76,5 +76,5 @@ Both files **.edf** and **.txt** will have the same trial code and the time dura
 
 **3) Executing code**
 
-The first step is to convert the hypnogram from a .txt file to a .mat file where two variables **label_vec** and **time_s** are created to synchronize, where in the timepoints across the entire trial, a sleep-stage start to occur. The stages that can occur across the trials are **'SLEEP-S0'**, **'SLEEP-S1'**, **'SLEEP-S2'**, **'SLEEP-S3'**, **'SLEEP-REM'**, and **'SLEEP-MT'**. We describe this stages as integers in the code, such as, **0**, **1**, **2**, **3**, **4**, and **-1** respectively.
+The first step is to convert the hypnogram from a .txt file to a .mat file where two variables **label_vec** and **time_s** are created to synchronize, where in the timepoints across the entire trial, a sleep-stage start to occur. The stages that can occur across the trials are **'SLEEP-S0'**, **'SLEEP-S1'**, **'SLEEP-S2'**, **'SLEEP-S3'**, **'SLEEP-REM'**, and **'SLEEP-MT'**. We describe this stages as integers in the code, such as, **0**, **1**, **2**, **3**, **4**, and **-1** respectively. This **'SLEEP-MT'** stage corresponds to a movement stage and not any sleep-stage, therefore this is removed from the analysis in this code repository.
  
