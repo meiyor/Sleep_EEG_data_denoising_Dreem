@@ -15,4 +15,9 @@ Now you need to install four required EEGlab **plugins** in EEGlab opening the c
 - [**PrepPipeline0.55.3**](http://vislab.github.io/EEG-Clean-Tools/)
 - [**ADJUST1.1.1**](https://www.nitrc.org/projects/adjust/)
 
-  
+When the plugins are already installed you can add the new files into the Matlab path repeating the same command described above.  
+
+
+```matlab
+   >> addpath(genpath('where_EEGlab_is_located'));
+```
