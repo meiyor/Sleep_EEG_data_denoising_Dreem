@@ -78,8 +78,7 @@ Both files **.edf** and **.txt** will have the same trial-code and the time dura
 
 ## 3) Executing code
 
-The first step is to convert the hypnogram from a .txt file to a .mat file where two variables **label_vec** and **time_s** are created to synchronize, where in the timepoints across the entire trial, a sleep-stage start to occur. The stages that can occur across the trials are **'SLEEP-S0'**, **'SLEEP-S1'**, **'SLEEP-S2'**, **'SLEEP-S3'**, **'SLEEP-REM'**, and **'SLEEP-MT'**. We describe this stages as integers in the code, such as, **0**, **1**, **2**, **3**, **4**, and **-1** respectively. This **'SLEEP-MT'** stage corresponds to a movement stage and not any sleep-stage, therefore this is removed from the analysis in this code repository.
-Therefore, to transform the hypnogram from from a .txt file to a .mat file where two variables we need to run the following command.
+The first step is to convert the hypnogram from a .txt file to a .mat file where two variables **label_vec** and **time_s** are created to synchronize, where in the timepoints across the entire trial, a sleep-stage start to occur. The stages that can occur across the trials are **'SLEEP-S0'**, **'SLEEP-S1'**, **'SLEEP-S2'**, **'SLEEP-S3'**, **'SLEEP-REM'**, and **'SLEEP-MT'**. We describe this stages as integers in the code, such as, **0**, **1**, **2**, **3**, **4**, and **-1** respectively. This **'SLEEP-MT'** stage corresponds to a movement stage and not any sleep-stage, therefore this is removed from the analysis in this code repository. Therefore, to transform the hypnogram from from a .txt file to a .mat file where two variables we need to run the following command.
 
 ```matlab
    >> hypnogram_read('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf')
@@ -91,7 +90,7 @@ Now in order to run the code for processing the EEG data, transform it to unipol
 ```matlab
    >> [Sal_filtered,Sal,Result]=windowing_sleep_EEG('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf',4,2,0,250);
 ```
-The first parameter of this command is the name of the .edf file - that has the hypnogram calculated associated, the second parameter is the length of the window that the denoising process is done,- We suggest **4 seconds**, the third parameter is the overlap setting in seconds - We suggest  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising by default it is **0 seconds** but the user can change it for convinience, and the fifth parameter is the sampling-frequency of these sleep trials which is **250Hz***.
+The first parameter of this command is the name of the .edf file - this file must have the hypnogram calculated and associated with the name of the file a-priori, the second parameter is the length of the window that the denoising process is done,- We suggest to use **4 seconds**, the third parameter is the overlap in seconds - We suggest to use  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising, by default it is **0 seconds** but the user can change it for his/her convinience, and the fifth parameter is the sampling-frequency of these sleep trials which is **250Hz***.
 
 This process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **sws** detection from a interim denoised signal depending what the user wants to measure.
 
