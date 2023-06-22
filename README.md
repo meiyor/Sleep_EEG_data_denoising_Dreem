@@ -66,7 +66,7 @@ Substitute the line 285 for the following line of code.
 
 ## 2) Downloading data
 
-You/user must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you/user the EEG data and the text-hypnograms collected for each particular subject in the **sleep** study. In this portal interface you/user can select a trial for a particular subject, the system will tell you/user the code of the trial, the device that was used to collect the data, and the duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
+You/user must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you/user the EEG data and the text-hypnograms collected for each particular subject in the **sleep** study. In this portal interface you/user can select a trial for a particular subject, the system will tell you/user the code of the trial, the device that was used to collect the data, when the trial starts and ends, and the total duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
 
 <img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_edf.jpg" width="900" height="400">
 
