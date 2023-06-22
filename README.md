@@ -28,7 +28,23 @@ To avoid errors with the octave functions of the **EEGlab** folder you need to r
    >> rmpath(genpath('where_EEGlab_is_located/functions/octavefunc'));
 ```
 
-Due to the amount of channels in each Dreem trial is only four we need to change a couple of lines in the 
+Due to the amount of channels on each Dreem trial is only four, we need to change a couple of lines in the ADJUST plugins files. 1) First in the file **EM.m** add the following lines from the line 84 of the **EM.m** code.
+
+```matlab
+   if all(single(vec)==1.0)
+    if alpha1==0
+        train1=real(ones([1 len-length(train2)]));
+    end;
+    if alpha2==0
+        train2=real(ones([1 len-length(train1)]));
+    end;
+    if alpha1==0 && alpha2==0
+        train1=real(ones([1 2]));
+        train2=real(ones([1 2]));
+    end;
+end;
+```
+2)
 
 **2) Download data**
 
@@ -38,6 +54,6 @@ You must download the data from the [**Dreem portal**](https://dreem-viewer.ryth
 
 This will download all the EEG data as **.edf** file that's why the **Biosig3.3.0** plugin must be included in the subsequent executions. Now you must download the hypnogram as text as the following screen is showing. 
 
-<img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_edf.jpg" width="900" height="400">
+<img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_hypnogram.jpg" width="900" height="400">
 
-Both files **.edf** and **.txt** will have the same trial code and the time duration as name. In the **data** folder of this repository I added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****
+Both files **.edf** and **.txt** will have the same trial code and the time duration as name. In the **data** folder of this repository I added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****.
