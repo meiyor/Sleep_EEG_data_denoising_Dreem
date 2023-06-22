@@ -36,4 +36,8 @@ You must download the data from the [**Dreem portal**](https://dreem-viewer.ryth
 
 <img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_edf.jpg" width="900" height="400">
 
-This will download all the EEG data as **.edf** file that's why the **Biosig3.3.0** plugin must be included in the subsequent executions. Now you must download the hypnogram as text as the following screen is showing. Both files **.edf** and **.txt** will have the same trial code and the time duration as name. In the **data** folder of this repository I added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****
+This will download all the EEG data as **.edf** file that's why the **Biosig3.3.0** plugin must be included in the subsequent executions. Now you must download the hypnogram as text as the following screen is showing. 
+
+<img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_edf.jpg" width="900" height="400">
+
+Both files **.edf** and **.txt** will have the same trial code and the time duration as name. In the **data** folder of this repository I added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****
