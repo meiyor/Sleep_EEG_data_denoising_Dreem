@@ -1,4 +1,5 @@
-# Sleep_EEG_data_denoising-Dreem
+# Sleep_EEG_data_denoising_Dreem
+
 In the following READme we will describe the steps any user needs to follow to run the denoising and artifact rejection for the EEG large trials collected in the **Sleep** study at [**Filbey's Lab**](https://labs.utdallas.edu/filbeylab/) and using the [**Dreem**](https://dreem.com/) ambulatory device. These EEG trials were collected while participants, who are consumers of cannabis and controls (non-consumers), are in different sleeping stages.
  
 **1) Installing and Preparing Requirements**
