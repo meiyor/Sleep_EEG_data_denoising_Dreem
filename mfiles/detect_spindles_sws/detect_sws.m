@@ -6,7 +6,7 @@ function [SW,incidence]=detect_sws(data,times,fs,sel_plot)
 %% sel_plot: 0 if you don't want to plot the SWS detected holded on your EEG data, and 1 if you want to plot the SWS detected holded on your input EEG data plotted as well.
 %% %% the output parameters set for this code are the following
 %% SW: structure containing the SWS canonical representation calculated from the 4 channels and the swa-matlab toolbox.
-%% incidence: this is a number representing the number of SWS detected per minute across the trial input given for analysis.
+%% incidence: this is a number representing the number of SWS detected per minute across the EEG input given for analysis.
 close all;
 ttime=linspace(times(1),times(end),length(times));
 Sal=eeg_emptyset();
