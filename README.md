@@ -97,4 +97,9 @@ This process can take a while depending the length of the trial, therefore, it i
 
 **4) Detect Sleep Spindles and SWS**
 
-In this step we will assume that the **start_param** and **end_param** are the start and end time that will be analyzed by the **spindles** and **sws** detectors. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Now, first asume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in matlab.  
+In this step we will assume that the **start_param** and **end_param** are the start and end time that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first asume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
+
+```matlab
+   >> times=linspace(start_param,end_param,length(squeeze(Sal(1,start_param*250:end_param*250))));
+```
+From this point, we can detect 1) **sleep spindles** using the Wavelet-based method defined in [**this link**]()
