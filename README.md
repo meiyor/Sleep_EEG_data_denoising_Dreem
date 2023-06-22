@@ -44,13 +44,23 @@ Due to the amount of channels on each Dreem trial is only four, we need to chang
     end;
   end;
 ```
-2) In the file **compute_GD_feat.m** you need to substitute the lines 60 and 61 in the code, for the following lines, due to the low amount of channels used in this project **4**.
+2) In the file **compute_GD_feat.m** you need to substitute the lines 60 and 61 in the code, for the following lines, due to the few amount of channels used in this project **4**.
    
 ```matlab
-  repchas=I(1:4); % list of 10 nearest channels to el
+  repchas=I(1:4); % list of 4 nearest channels to el
   weightchas=exp(-y(1:4)); % respective weights, computed wrt distance
 ```
+3) In the file **ADJUST.m** change the following lines for the code reported here. For line 243 change the current line with the following line.
+   
+```matlab
+  K(j,i)=kurt(real(EEG.icaact(i,:,j)));
+```
 
+Substitute the line 285 for the following line of code.
+
+```matlab
+  nuovaV=real(maxvar./meanvar);
+```
 
 **2) Download data**
 
@@ -63,3 +73,6 @@ This will download all the EEG data as **.edf** file that's why the **Biosig3.3.
 <img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_hypnogram.jpg" width="900" height="400">
 
 Both files **.edf** and **.txt** will have the same trial code and the time duration as name. In the **data** folder of this repository I added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****.
+
+**3) Executing code**
+
