@@ -42,9 +42,15 @@ Due to the amount of channels on each Dreem trial is only four, we need to chang
         train1=real(ones([1 2]));
         train2=real(ones([1 2]));
     end;
-end;
+  end;
 ```
-2)
+2) In the file **compute_GD_feat.m** you need to substitute the lines 60 and 61 in the code, for the following lines, due to the low amount of channels used in this project **4**.
+   
+```matlab
+  repchas=I(1:4); % list of 10 nearest channels to el
+  weightchas=exp(-y(1:4)); % respective weights, computed wrt distance
+```
+
 
 **2) Download data**
 
