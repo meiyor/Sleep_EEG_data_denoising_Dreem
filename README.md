@@ -97,9 +97,29 @@ This process can take a while depending the length of the trial, therefore, it i
 
 **4) Detect Sleep Spindles and SWS**
 
-In this step we will assume that the **start_param** and **end_param** are the start and end time that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first asume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
+In this step we will assume that the **start_param** and **end_param** are the start and end time, **in seconds**, that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first asume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
 
 ```matlab
    >> times=linspace(start_param,end_param,length(squeeze(Sal(1,start_param*250:end_param*250))));
 ```
-From this point, we can detect 1) **sleep spindles** using the Wavelet-based method defined in [**this link**]()
+From this point, we can detect 1) **sleep spindles** using the **Wavelet-based method** defined in [**SpindleTool**](https://github.com/nsrr/SpindleTool). We modifiy this code to make the detection more efficient and more adaptable to the resulting signals ontained in **Sal**. Now, we can execute the code defined in the file **sleep_spindle_detector_wavelet.m** following the next Matlab command.
+
+``matlab
+   >> [timespindles,durspindles,MINS,DENS,time_SS,dur_SS,dens_SS]=sleep_spindle_detector_wavelet(Sal(:,start_param*250:end_param*250),times,250,4,0,4,0.3,0.5,11);
+```
+The parameters in this function are taken from the function comments here. Here we explained all the input parameters in sequence:
+- **data**: an array composed between channels **(in this case four- 4) x sample-length** and it is the fraction of EEG data you want to use to infer where are the sleep spindles.
+- **time**: this is an array of size time having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
+- **fs** : sampling frequency being 250Hz for this particular case
+- **nbchan**: four (4) for this particular case
+- **sel_plot**: 0 if you don't want to plot the spindles holded in your EEG data, and 1 if you want to plot the sleep spindles holded on your input data. 
+- ch_sel_in: the user must specify what channels the want to plot as numerical indeces [1, 2, 3 or 4], after the bipolar set is transformed to unipolar the indeces of the channels are {F7, F8, O1, O2}.
+- time_c1: time constrain 1 for the spindles detection suggested to define it in 0.3
+- time_c2: time constrain 2 for the spindles detection suggested to define it in 0.5
+- center_freq: define this center frequency between 11-13Hz define it following the convinience of the user
+
+If you want to plot the desired channel parameters with the detected spindles plot on hold you can use the following Matlab command. This happened when the sel_plot parameter is 1.
+
+``matlab
+   >> [timespindles,durspindles,MINS,DENS,time_SS,dur_SS,dens_SS]=sleep_spindle_detector_wavelet(Sal(:,start_param*250:end_param*250),times,250,4,1,4,0.3,0.5,11);
+```
