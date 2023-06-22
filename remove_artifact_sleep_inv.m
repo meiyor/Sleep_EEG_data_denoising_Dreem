@@ -43,7 +43,7 @@ while ica_size>1 %% && any(max(SString_L.data')>=100) %% don't use any amplitude
     SString_L.chanlocs=readlocs('pos_unipolar_dreem.loc');
     SString_L=pop_cleanline(SString_L,'LineFrequencies',[50,60]);
 
-    %% don't average across the channels they are so few and they are already references to Fp1
+    %% don't average across the channels they are so few and they are already references to Fp1 uncomment only if you consider
     %SString_L=pop_reref(SString_L,[]);
     
     %% clean raw process
@@ -55,7 +55,7 @@ while ica_size>1 %% && any(max(SString_L.data')>=100) %% don't use any amplitude
     end;
     
     %rmpath(genpath('/media/jmm/One_Touch/eeglab14_1_1b'))
-    %% don't use the bssemg for having the artifacts detected by the ICA process
+    %% don't use the bssemg for having the artifacts detected by the ICA process, uncomment this only if you consider
     %data_clean_raw=pop_autobssemg(data_clean_raw,1,0.85,'bsscca',{'eigratio',1e6},'emg_psd',{'ratio',10,'fs',250,'range',[1 10]});
     
 
