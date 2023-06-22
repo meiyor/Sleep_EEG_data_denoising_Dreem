@@ -16,13 +16,13 @@ Now, you/user need to install four required EEGlab **plugins** in EEGlab opening
 - [**PrepPipeline0.55.3**](http://vislab.github.io/EEG-Clean-Tools/)
 - [**ADJUST1.1.1**](https://www.nitrc.org/projects/adjust/)
 
-When the plugins are already installed or located in the **plugins** folder inside the EEGlab root folder, you/user can add the new files into the Matlab path repeating the same command described above.  
+When the plugins are already installed or located in the **plugins** folder inside the EEGlab root folder, you/user can add the new files into the Matlab path repeating the same command described previously.  
 
 
 ```matlab
    >> addpath(genpath('where_EEGlab_is_located'));
 ```
-To avoid errors with the octave functions of the **EEGlab** folder, you/user need to remove th octave functions from the EEGlab functions folder. You/user can follow this matlab command to remove the octave functions and subdirectories from the Matlab path.
+To avoid errors with the octave functions of the **EEGlab** folder, you/user must remove th octave functions from the EEGlab functions folder. You/user can follow this matlab command to remove the octave functions and subdirectories from the Matlab path.
 
 
 ```matlab
@@ -30,7 +30,7 @@ To avoid errors with the octave functions of the **EEGlab** folder, you/user nee
 ```
 For detecting SWS in the subsequent execution you/user need to donwload and install the [**swa-matlab**](https://github.com/Mensen/swa-matlab) toolbox. Add the **swa-matlab** folder in the Matlab path. For avoiding errors in the following executions, especially in the detectors, use the **swa-matlab** folder added in this repository.
 
-Due to the amount of channels on each Dreem trial is only four, we need to change a couple of lines in the ADJUST plugins files. 1) First in the file **EM.m** add the following lines from the line 84 of the **EM.m** code.
+Due to the amount of channels on each Dreem trial is few, only four **4**, we need to change a couple of lines in the ADJUST plugins files. 1) First in the file **EM.m** add the following lines from the line 84 of the **EM.m** code.
 
 ```matlab
    if all(single(vec)==1.0)
@@ -44,9 +44,9 @@ Due to the amount of channels on each Dreem trial is only four, we need to chang
         train1=real(ones([1 2]));
         train2=real(ones([1 2]));
     end;
-  end;
+   end;
 ```
-2) In the file **compute_GD_feat.m** you/user need to substitute the lines 60 and 61 in the code, for the following lines, due to the few amount of channels used in this project **4**.
+2) In the file **compute_GD_feat.m** you/user need to substitute the lines 60 and 61 in the code, for the following lines, due to the few amount of channels used in this project **4**. This function always expects to receive more than 10 channels for each EEG trial.
    
 ```matlab
   repchas=I(1:4); % list of 4 nearest channels to el
@@ -66,7 +66,7 @@ Substitute the line 285 for the following line of code.
 
 ## 2) Downloading data
 
-You/user must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you/user the EEG data and the text-hypnograms collected for each particular subject in the **Sleep** study. In this portal interface you/user can select a trial for a particular subject, the system will tell you/user the code of the trial, the device that was used to collect the data, and the duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
+You/user must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you/user the EEG data and the text-hypnograms collected for each particular subject in the **sleep** study. In this portal interface you/user can select a trial for a particular subject, the system will tell you/user the code of the trial, the device that was used to collect the data, and the duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
 
 <img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_edf.jpg" width="900" height="400">
 
@@ -85,18 +85,18 @@ The first step is to convert the hypnogram from a .txt file to a .mat file where
 ```
 The previous command will generate a file **Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.mat**. This file will be necessary to run the EEG data processing and change the filter parameters depending on the sleeping-stage that is happening in the analysis across the EEG trial. This is guideline in time domain to change the filter parameters according to the hypnogram stage. These filter parameters are defined in the file **remove_artifact_sleep_inv.m** and you/user can see how the parameters selection is performed in the section of the Wavelet decomposition.
 
-Now, in order to run the code for processing the EEG data, transform it to unipolar, and start to denoise it from distortions and artifacts, we need to execute the function written in the **windowing_sleep_EEG.m** file. The **windowing_sleep_EEG.m** function will generate the data output or interim as an array with size **4 channels x trial samples-length**. The four channels taken into account in this sleep study are **F7**, **F8**, **O1**, and **O2**. After the hypnogram **.mat** file is generated you/user must run the following Matlab command.
+Now, in order to run the code for processing the EEG data, transform it to unipolar, and start to denoise it from distortions and artifacts, we need to execute the function written in the **windowing_sleep_EEG.m** file. The **windowing_sleep_EEG.m** function will generate the data output or interim as an array with size **4 channels x trial samples-length**. The four channels taken into account in this **sleep** study are **F7**, **F8**, **O1**, and **O2**. After the hypnogram **.mat** file is generated you/user must run the following Matlab command.
 
 ```matlab
    >> [Sal_filtered,Sal,Result]=windowing_sleep_EEG('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf',4,2,0,250);
 ```
-The first parameter of this command is the name of the .edf file - this file must have the hypnogram calculated and associated with the name of the data file a-priori, the second parameter is the length of the window that the denoising process is done,- We suggest to use **4 seconds**, the third parameter is the overlap in seconds - We suggest to use  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising, by default it is **0 seconds** but the user can change it for his/her convinience, and the fifth parameter is the sampling-frequency of these sleep trials which is **250Hz***.
+The first parameter of this command is the name of the .edf file - this file must have the hypnogram calculated and associated with the name of the data file a-priori, the second parameter is the length of the window that the denoising process is done,- We suggest to use **4 seconds**, the third parameter is the overlap in seconds - We suggest to use  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising, by default it is **0 seconds** but the you/user can change it for your/his/her convinience, and the fifth parameter is the sampling-frequency of these EEG trials which is **250Hz***.
 
 This process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **sws** detection from a interim denoised signal depending what the user wants to measure.
 
 ## 4) Detecting Sleep Spindles and SWS
 
- In this step we will assume that the **start_param** and **end_param** are the start and end time, **in seconds**, that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first assume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
+ In this step we will assume that the **start_param** and **end_param** are the start and end time, **in seconds**, that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first assume **Sal** as the resulting denoised EEG output. Then, we can define the time-domain vector using the **linspace** command in Matlab.  
 
 ```matlab
    >> times=linspace(start_param,end_param,length(squeeze(Sal(1,start_param*250:end_param*250))));
