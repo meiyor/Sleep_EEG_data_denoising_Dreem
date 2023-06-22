@@ -119,6 +119,16 @@ The parameters in this function are defined and taken from the function comments
  - **time_c1**: time constrain 1 for the spindles detection suggested to define it in 0.3
  - **time_c2**: time constrain 2 for the spindles detection suggested to define it in 0.5
  - **center_freq**: define this center frequency between 11-13Hz define it following the convinience of the user
+   
+The output parameters for the spindle detection function are defined here in the following list:
+
+ - **timespindles**: cell array with a size equal to number channels and for each channel we have a specific number of spindles detections. In this array we have the time where the spindles started in the time-domain vector.
+ - **durspindles**: cell array with a size equal to number channels and for each channel we have a specific number of spindles detections. In this array we have the duration of spindles in seconds.
+ - **MINS**: number of minutes that the data trial is taken in this analysis, this measure is taken for each channel.
+ - **DENS**: Density of spindles detected per each minute across the trial, this measure is calculated for each channel.
+ - **time_SS**: a sorted array grouping the spindles starting times detected for each channel. The array is sorted from low to high in seconds reporting the times where the spindles started.
+ - **dur_SS**: a sorted array grouping the spindles duration times detected for each channel. The array is sorted from low to high in seconds reporting the spindles duration. The length of time_SS and dur_SS are equal.
+ - **dens_SS**: a number representing the density of spindles detected per minute in the entire trial after grouping all the different spindles detected for each channel.
 
 If you want to plot the desired channel parameters with the detected spindles plot on hold you can use the following Matlab command. This happened when the sel_plot parameter is 1.
 
