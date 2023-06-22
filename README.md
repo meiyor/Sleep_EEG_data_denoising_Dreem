@@ -27,6 +27,7 @@ To avoid errors with the octave functions of the **EEGlab** folder you need to r
 ```matlab
    >> rmpath(genpath('where_EEGlab_is_located/functions/octavefunc'));
 ```
+For detecting SWS in the subsequent execution you need to donwload and install the [**swa-matlab**](https://github.com/Mensen/swa-matlab) toolbox. Add the **swa-matlab** folder in the Matlab path. For avoiding errors in the following executions, especially in the detectors, use the **swa-matlab** folder added in this repository.
 
 Due to the amount of channels on each Dreem trial is only four, we need to change a couple of lines in the ADJUST plugins files. 1) First in the file **EM.m** add the following lines from the line 84 of the **EM.m** code.
 
@@ -84,10 +85,15 @@ Therefore, to transform the hypnogram from from a .txt file to a .mat file where
 ```
 The previous command will generate a file **Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.mat**. This file will be necessary to run the EEG data processing and change the filter parameters depending on the sleeping-stage the analysis is across the trial. This is guideline of course, in time domain, to change those corresponding parameters. This parameters are changed in the file **remove_artifact_sleep_inv.m**.
 
-Now in order to run the code for processing the EEG data, transform it to unipolar and start to denoise it from distortions and artifacts, we need to run the **windowing_sleep_EEG.m**. After the hypnogram **.mat** file is generated you must run the following Matlab command.
+Now in order to run the code for processing the EEG data, transform it to unipolar and start to denoise it from distortions and artifacts, we need to run the **windowing_sleep_EEG.m**. After the hypnogram **.mat** file is generated you must run the following Matlab command. The **windowing_sleep_EEG.m** function will generate the data output or interim as an array with size **4 channels x trial samples-length**. The four channels taken into account in this analysis and in these sleep study trials are **F7**, **F8**, **O1**, and **O2**.
 
 ```matlab
    >> [Sal_filtered,Sal,Result]=windowing_sleep_EEG('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf',4,2,0,250);
 ```
-The first parameter of this command is the name of the .edf file, the second parameter is the length of the window that the denoising process is done,- I suggest **4 seconds**, the third parameter is the overlap setting in seconds - I suggest  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising by default it is **0 seconds** but the user can change it for convinience, and the fifth parameter is the sampling-frequency of these sleep trials which is **250Hz***.
+The first parameter of this command is the name of the .edf file - that has the hypnogram calculated associated, the second parameter is the length of the window that the denoising process is done,- I suggest **4 seconds**, the third parameter is the overlap setting in seconds - I suggest  **2 seconds**, the fourth parameter is the time-offset that the process wil use to start doing the denoising by default it is **0 seconds** but the user can change it for convinience, and the fifth parameter is the sampling-frequency of these sleep trials which is **250Hz***.
 
+This process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **sws** detection from a interim denoised signal depending what the user wants to measure.
+
+**4) Detect Sleep Spindles and SWS**
+
+In this step we will assume that the **start_param** and **end_param** are the start and end time that will be analyzed by the **spindles** and **sws** detectors. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Now, first asume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in matlab.  
