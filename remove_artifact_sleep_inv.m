@@ -83,7 +83,8 @@ while ica_size>1 %% && any(max(SString_L.data')>=100) %% don't use any amplitude
     art_A{ccount+1}=art_channels;
     data_after_ADJUST.data=mean(data_after_ADJUST.data(:,:,:),3);
     data_after_ADJUST.trials=1;
-    
+
+    %% type of filters selection depending on the hypnogram stage
     if  label_stage==2
         filter_p='db2';
     else
@@ -91,10 +92,11 @@ while ica_size>1 %% && any(max(SString_L.data')>=100) %% don't use any amplitude
     end;
     
     for ch=1:4
+        %%% wavelet decomposition step
        [data_res{ch},l{ch}]=wavedec(real(data_after_ADJUST.data(ch,:)),3,filter_p);
        approx{ch} = appcoef(data_res{ch},l{ch},filter_p);
        [cd1{ch},cd2{ch},cd3{ch}] = detcoef(data_res{ch},l{ch},[1 2 3]);
-       %% remove the octave functions if this necessary from the EEGlab path in functions->octavefunc
+       %% remove the octave functions if this necessary from the EEGlab path in functions->octavefunc remove the octave function to prevent the octave functions error
        if label_stage==3
             data_after_ADJUST.data(ch,:)=(resample(double(cd1{ch}),size(data_after_ADJUST.data,2),length(cd1{ch}))+resample(double(cd2{ch}),size(data_after_ADJUST.data,2),length(cd2{ch}))+resample(double(cd3{ch}),size(data_after_ADJUST.data,2),length(cd3{ch}))+resample(double(approx{ch}),size(data_after_ADJUST.data,2),length(approx{ch})))/4;
        else
@@ -121,9 +123,9 @@ end;
 if ccount==0
     data_after_ADJUST=SString_L;   
 end;
-if ccount<20
-    A=1;
-end;
+%%if ccount<20
+%%    A=1;
+%%end;
 %% adjust amplitude 
 if label_stage==3
     data_after_ADJUST.data=data_after_ADJUST.data*5;
@@ -140,5 +142,4 @@ end;
 %if label_stage==0 || label_stage==1
 %         data_after_ADJUST = pop_eegfiltnew(data_after_ADJUST,1,120,8250);
 %end
-A=1;
   
