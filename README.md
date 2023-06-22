@@ -83,7 +83,7 @@ The first step is to convert the hypnogram from a .txt file to a .mat file where
 ```matlab
    >> hypnogram_read('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf')
 ```
-The previous command will generate a file **Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.mat**. This file will be necessary to run the EEG data processing and change the filter parameters depending on the sleeping-stage the analysis is across the trial. This is guideline of course, in time domain, to change those corresponding parameters. This parameters are changed in the file **remove_artifact_sleep_inv.m**.
+The previous command will generate a file **Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.mat**. This file will be necessary to run the EEG data processing and change the filter parameters depending on the sleeping-stage that is happening in the analysis across the EEG trial. This is guideline of course, in time domain, to change the filter parameters. These filter parameters are changed in the file **remove_artifact_sleep_inv.m** and you/user can see that in the section of the Wavelet decomposition.
 
 Now in order to run the code for processing the EEG data, transform it to unipolar and start to denoise it from distortions and artifacts, we need to run the **windowing_sleep_EEG.m**. After the hypnogram **.mat** file is generated you/user must run the following Matlab command. The **windowing_sleep_EEG.m** function will generate the data output or interim as an array with size **4 channels x trial samples-length**. The four channels taken into account in this analysis and in these sleep study trials are **F7**, **F8**, **O1**, and **O2**.
 
