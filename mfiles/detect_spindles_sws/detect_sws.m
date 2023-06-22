@@ -1,7 +1,7 @@
 function [SW,incidence]=detect_sws(data,times,fs,sel_plot)
 %% the input parameters set for this code are the following
-%% data: an array composed between channels (in this case four- 4) x time and it is the fraction of EEG data you want to use to infer where are the sleep spindles.
-%% time: this is an array of size time having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
+%% data: an array composed of channels (in this case four- 4) x sample-length and it is the fraction of EEG data you want to use to infer where are the sleep spindles.
+%% time: this is an array of size sample-length having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
 %% fs: sampling frequency being 250Hz for this particular case
 %% sel_plot: 0 if you don't want to plot the SWS detected holded on your EEG data, and 1 if you want to plot the SWS detected holded on your input EEG data plotted as well.
 %% %% the output parameters set for this code are the following
