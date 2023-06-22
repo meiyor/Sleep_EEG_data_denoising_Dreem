@@ -66,31 +66,31 @@ Substitute the line 285 for the following line of code.
 
 ## 2) Downloading data
 
-You/user must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you/user the EEG data and the text-hypnograms collected for each particular subject in the **sleep** study. In this portal interface you/user can select a trial for a particular subject, the system will tell you/user the code of the trial, the device that was used to collect the data, when the trial starts and ends, and the total duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
+You/user must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you/user the EEG data and the text-hypnograms collected for each particular subject in the **sleep** study. In this portal interface you/user can select a trial for a particular subject, the system will tell you/user the code of the trial, the device that was used to collect the data, when the trial starts and ends, and the total duration of the trial. The process to select the EEG data from any trial consists in clicking on the trial to select it and subsequently click on the **Download** button and choose **EDF**. This process appears in the following image.
 
 <img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_edf.jpg" width="900" height="400">
 
-This will download all the EEG data as **.edf** file that's why the **Biosig3.3.0** plugin must be included in the subsequent executions. Now you must download the hypnogram as text as the following screen is showing. 
+This will download the EEG data for any particular trial as a **.edf** file, that's why the **Biosig3.3.0** plugin must be included for the subsequent executions. Now, you/user must download the hypnogram as text as the following image is showing. 
 
 <img src="https://github.com/meiyor/Sleep_EEG_data_denoising_Dreem/blob/main/images/dreem_portal_hypnogram.jpg" width="900" height="400">
 
-Both files **.edf** and **.txt** will have the same name composed of the trial-code and the time duration joined as strings. In the **data** folder of this repository we added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****.
+Both files **.edf** and **.txt** will have the same name composed of the trial-code and the time duration of the trial joined as strings. In the **data** folder of this repository we added a couple of examples of **.edf** and **.txt**, such as, **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****.
 
 ## 3) Executing code
 
-The first step is to convert the hypnogram from a .txt file to a .mat file where two variables **label_vec** and **time_s** are created to synchronize, where in the timepoints across the entire trial, a sleep-stage start to occur. The stages that can occur across the trials are **'SLEEP-S0'**, **'SLEEP-S1'**, **'SLEEP-S2'**, **'SLEEP-S3'**, **'SLEEP-REM'**, and **'SLEEP-MT'**. We describe this stages as integers in the code, such as, **0**, **1**, **2**, **3**, **4**, and **-1** respectively. This **'SLEEP-MT'** stage corresponds to a movement stage and not any sleep-stage, therefore this is removed from the analysis in this code repository. Therefore, to transform the hypnogram from from a .txt file to a .mat file where two variables we need to run the following command.
+The first step is to convert the hypnogram from a .txt file to a .mat file. In this .mat file two variables named **label_vec** and **time_s** are created to synchronize when in the time a sleep-stage start to occur and when it ends. The stages that can occur across these **sleep** EEG trials are **'SLEEP-S0'**, **'SLEEP-S1'**, **'SLEEP-S2'**, **'SLEEP-S3'**, **'SLEEP-REM'**, and **'SLEEP-MT'**. We describe these stages as integers in the code, such as, **0**, **1**, **2**, **3**, **4**, and **-1** respectively. This **'SLEEP-MT'** stage corresponds to a movement stage and not any particular sleep-stage. Therefore, this **'SLEEP-MT'** stage is removed from the analysis reported in this code repository. To transform the hypnogram from from a .txt file to a .mat file we need to run the following command.
 
 ```matlab
    >> hypnogram_read('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf')
 ```
-The previous command will generate a file **Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.mat**. This file will be necessary to run the EEG data denoising and change the filter parameters depending on the sleeping-stage aligned to each particular time-window. This hypnogram is a guideline, in time domain, to change the filter parameters according to the sleep-stage corresponding to each time-window. The setting of these filter parameters is reported in the file **remove_artifact_sleep_inv.m** and you/user can see how the parameters selection is performed in the section of the Wavelet decomposition.
+The previous command will generate a file called **Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.mat**. This file will be necessary to run the EEG data denoising and change the filter parameters depending on the sleeping-stage aligned to each particular time-window. This hypnogram is a guideline, in time domain, to change the filter parameters according to the sleep-stage corresponding to each time-window. The setting of these filter parameters is reported in the file **remove_artifact_sleep_inv.m** and you/user can see how the parameters selection is performed in the section of the Wavelet decomposition.
 
 Now, in order to run the code for processing the EEG data, transform it to unipolar, and start to denoise it from distortions and artifacts, we need to execute the function written in the **windowing_sleep_EEG.m** file. The **windowing_sleep_EEG.m** function will generate a data denoised or output, or interim as an array with size **4 channels x samples-length**. The **samples-length** parameter is defined as the number of time-windows that has been processed by  **windowing_sleep_EEG.m** times **fs**. The four channels taken into account in this **sleep** study are **F7**, **F8**, **O1**, and **O2**. After the hypnogram **.mat** file is generated you/user must run the following Matlab command.
 
 ```matlab
    >> [Sal_filtered,Sal,Result]=windowing_sleep_EEG('Sleepproject_c038_2023-03-19T00-09-10[05-00].edf',4,2,0,250);
 ```
-The input parameters for this function as described as follows: 1) The first parameter of this command is the name of the .edf file - this file must have the hypnogram calculated and associated with the name of the data file a-priori. 2) The second parameter is the length of the window that the denoising process is done, we suggest to use **4 seconds**. 3) The third parameter is the overlap in seconds applied to each time-window - we suggest to use  **2 seconds**. 4) The fourth parameter is the time-offset that the process wil use to start doing the denoising, by default it is **0 seconds** but the you/user can change it for your/his/her convinience. 5) The fifth parameter is the sampling-frequency of these EEG trials which is **250Hz*** for this particular **sleep** study.
+The input parameters for this function as described as follows: 1) The first parameter of this command is the name of the .edf file - this file must have the hypnogram calculated and associated with the name of the data-file using the **hypnogram_read.m** function. 2) The second parameter is the length of the window that the denoising process is done, we suggest to use **4 seconds**. 3) The third parameter is the overlap in seconds applied to each time-window - we suggest to use  **2 seconds**. 4) The fourth parameter is the time-offset that the process wil use to start doing the denoising, by default it is **0 seconds** but the you/user can change it for your/his/her convinience. 5) The fifth parameter is the sampling-frequency of these EEG trials which is **250Hz*** for this particular **sleep** study.
 
 This denoising + artifact rejection process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **SWS** detection from a interim denoised output depending what the you/user wants to measure.
 
@@ -109,8 +109,8 @@ From this point, we can detect 1) **sleep spindles** using the **Wavelet-based m
 
 The parameters in this function are defined and taken from the function comment section. Here we explained all the input parameters in sequence:
 
- - **data**: an array composed between channels **(in this case four- 4) x sample-length** and it is the fraction of EEG data you/user want to use to infer where are the sleep spindles.
- - **time**: this is an array of size **sample-length** having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
+ - **data**: an array composed between channels **(in this case four- 4) x samples-length** and it is the fraction of EEG data you/user want to use to infer where are the sleep spindles.
+ - **time**: this is an array of size **samples-length** having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
  - **fs** : sampling frequency being 250Hz for this particular case
  - **nbchan**: four (4) for this particular case
  - **sel_plot**: 0 if you/user don't want to plot the spindles holded in your EEG data, and 1 if you/user want to plot the sleep spindles holded on your input data. 
@@ -142,8 +142,8 @@ Now, for detecting **SWS** we used the [**swa-matlab**](https://github.com/Mense
 
 The input parameters of this function are listed here as we have set them in the comments section of the corresponding code:
 
- - **data**: an array composed of channels (in this case four- 4) x samples-length and it is the fraction of EEG data you/user want to use to infer where are the sleep spindles.
- - **time**: this is an array of size samples-length having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the **data input parameter.
+ - **data**: an array composed of channels (in this case four- 4) x **samples-length** and it is the fraction of EEG data you/user want to use to infer the position and duration of the sleep spindles.
+ - **time**: this is an array of size **samples-length** having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the **data** input parameter.
  - **fs**: sampling frequency being 250Hz for this particular case
  - **sel_plot**: 0 if you/user don't want to plot the **SWS** detected holded on your EEG data, and 1 if you/user want to plot the **SWS** detected holded on your input EEG data plotted as well.
 
@@ -156,4 +156,4 @@ If you/user wants to plot the **SWS** canonical output with the detected **SWS**
 ```matlab
    >> [SW,incidence]=detect_sws(Sal(:,start_param*250:end_param*250),times,250,1);
 ```
-Follow the steps as they are reported in this READme file and guide yourself/herself/himself with the comments and hints written in the code to do an easy and practical replication of the EEG denoising process. If any issue is presented during the evaluation of this process please open an issue in this repository or contact me at [**juan.mayortorres@utdallas.edu**](juan.mayortorres@utdallas.edu).
+Follow the steps as they are reported in this READme and guide yourself/herself/himself with the comments and hints written in the code to do an easy and practical replication of the EEG denoising process. If any issue is presented during the evaluation of this process please open an issue in this repository or contact me at [**juan.mayortorres@utdallas.edu**](juan.mayortorres@utdallas.edu).
