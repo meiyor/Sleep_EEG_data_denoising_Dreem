@@ -64,7 +64,7 @@ Substitute the line 285 for the following line of code.
   nuovaV=real(maxvar./meanvar);
 ```
 
-**2) Downloading data**
+## 2) Downloading data
 
 You must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you the EEG data and the text-hypnograms collected for each particular subject in the **Sleep** study. In this portal interface you can select a trial for a particular subject, the system will tell you the code of the trial, the device that was used to collect the data, and the duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
 
@@ -76,7 +76,7 @@ This will download all the EEG data as **.edf** file that's why the **Biosig3.3.
 
 Both files **.edf** and **.txt** will have the same trial-code and the time duration as strings joined as a name. In the **data** folder of this repository we added a couple of examples of **.edf** and **.txt** such as **Sleepproject_c038_2023-03-18T02-21-19[05-00].edf** and **Sleepproject_c038_2023-03-19T00-09-10[05-00].edf** and its corresponding hypnograms **Sleepproject_c038_2023-03-18T02-21-19[05-00]_hypnogram.txt** and ****Sleepproject_c038_2023-03-19T00-09-10[05-00]_hypnogram.txt****.
 
-**3) Executing code**
+## 3) Executing code
 
 The first step is to convert the hypnogram from a .txt file to a .mat file where two variables **label_vec** and **time_s** are created to synchronize, where in the timepoints across the entire trial, a sleep-stage start to occur. The stages that can occur across the trials are **'SLEEP-S0'**, **'SLEEP-S1'**, **'SLEEP-S2'**, **'SLEEP-S3'**, **'SLEEP-REM'**, and **'SLEEP-MT'**. We describe this stages as integers in the code, such as, **0**, **1**, **2**, **3**, **4**, and **-1** respectively. This **'SLEEP-MT'** stage corresponds to a movement stage and not any sleep-stage, therefore this is removed from the analysis in this code repository.
 Therefore, to transform the hypnogram from from a .txt file to a .mat file where two variables we need to run the following command.
@@ -95,7 +95,7 @@ The first parameter of this command is the name of the .edf file - that has the 
 
 This process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **sws** detection from a interim denoised signal depending what the user wants to measure.
 
-**4) Detecting Sleep Spindles and SWS**
+## 4) Detecting Sleep Spindles and SWS
 
  In this step we will assume that the **start_param** and **end_param** are the start and end time, **in seconds**, that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first assume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
 
@@ -157,3 +157,4 @@ If you want to plot the **SWS** canonical output with the detected **SWS** plott
 ```matlab
    >> [SW,incidence]=detect_sws(Sal(:,start_param*250:end_param*250),times,250,1);
 ```
+Follow the steps as they are reported in this READme file and guide yourself with the comments and hints written in the code to do an easy and practical replication of the EEG denoising process. If any issue is presented during the evaluation of this process please open an issue in this repository or contact me at [**juan.mayortorres@utdallas.edu**](juan.mayortorres@utdallas.edu).
