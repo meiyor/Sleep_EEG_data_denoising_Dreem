@@ -21,3 +21,7 @@ When the plugins are already installed or located in the **plugins** folder insi
 ```matlab
    >> addpath(genpath('where_EEGlab_is_located'));
 ```
+**2) Download data**
+
+You must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you the EEG data and the text-hypnograms collected for each particular subject in the **Sleep** study. In this portal interface you can select a trial for a particular subject, the system will tell you the code of the trial, the device that was used to collect the data, and the duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
+
