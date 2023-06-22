@@ -1,7 +1,7 @@
 function [timespindles,durspindles,MINS,DENS,time_SS,dur_SS,dens_SS]=sleep_spindle_detector_wavelet(data,times,fs,nbchan,sel_plot,ch_sel_ind,time_c1,time_c2,center_freq)
 %% data is must not be filtered it is filtered by the wavelet decomposition method
 %% the input parameters set for this code are the following
-%% data: an array composed between channels (in this case four- 4) x sample-length and it is the fraction of EEG data you want to use to infer where are the sleep spindles.
+%% data: an array composed between channels (in this case four- 4) x sample-length and it is the fraction of EEG data you want to use to infer the position and duration of the sleep spindles.
 %% time: this is an array of size sample-length having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the data input parameter.
 %% fs: sampling frequency being 250Hz for this particular case
 %% nbchan: four (4) for this particular case
