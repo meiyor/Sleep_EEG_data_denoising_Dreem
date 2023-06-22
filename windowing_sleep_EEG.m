@@ -27,4 +27,3 @@ function [Sal_filtered,Sal,Result]=windowing_sleep_EEG(name_of_the_file,time_win
    Sal.trials=1;
    %% filter it to detect spindles using Ferrareli et. al algorithm subsequently and the algorithms in Armand Mansen et. al for SWA
    Sal_filtered=pop_eegfiltnew(Sal,12,15,8250);
-   A=1;
