@@ -1,5 +1,6 @@
 function hypnogram_read(path)
-file_hypnogram=fopen(path);
+prefix=pwd()
+file_hypnogram=fopen([prefix '/' path]);
 for k_header=1:18
     s_header{k_header}=fgets(file_hypnogram);
 end;
@@ -32,6 +33,8 @@ while (~feof(file_hypnogram))
     counter_30sec=counter_30sec+1;
 end;
 plot(time_s,label_vec,'LineWidth',4)
+name_hypnogram_save=strsplit(path,'.');
+save([prefix '/' name_hypnogram_save{1} '_hypnogram.mat'],'label_vec','time_s');
 xlabel('Time [s]');
 set(gca,'FontSize',17);
 grid on;
