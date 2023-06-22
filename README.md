@@ -92,7 +92,7 @@ Now, in order to run the code for processing the EEG data, transform it to unipo
 ```
 The input parameters for this function as described as follows: 1) The first parameter of this command is the name of the .edf file - this file must have the hypnogram calculated and associated with the name of the data-file using the **hypnogram_read.m** function. 2) The second parameter is the length of the window that the denoising process is done, we suggest to use **4 seconds**. 3) The third parameter is the overlap in seconds applied to each time-window - we suggest to use  **2 seconds**. 4) The fourth parameter is the time-offset that the process wil use to start doing the denoising, by default it is **0 seconds** but the you/user can change it for your/his/her convinience. 5) The fifth parameter is the sampling-frequency of these EEG trials which is **250Hz*** for this particular **sleep** study.
 
-This denoising + artifact rejection process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **SWS** detection from a interim denoised output depending what the you/user wants to measure.
+This denoising + artifact rejection process can take a while depending the length of the trial. Therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **SWS** detection from a interim denoised output depending what the you/user wants to measure.
 
 ## 4) Detecting Sleep Spindles and SWS
 
