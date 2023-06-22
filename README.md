@@ -64,7 +64,7 @@ Substitute the line 285 for the following line of code.
   nuovaV=real(maxvar./meanvar);
 ```
 
-**2) Download data**
+**2) Downloading data**
 
 You must download the data from the [**Dreem portal**](https://dreem-viewer.rythm.co/login) login web page, use the username **Sleepproject_stagni01@dreem.com** and the password **HUpd<3**. This will show you the EEG data and the text-hypnograms collected for each particular subject in the **Sleep** study. In this portal interface you can select a trial for a particular subject, the system will tell you the code of the trial, the device that was used to collect the data, and the duration of the trial. The process to select the EEG data from the trial is first clicking on the trial and after that in the **Download** button and choose **EDF** as shown in the portal interface.
 
@@ -95,7 +95,7 @@ The first parameter of this command is the name of the .edf file - that has the 
 
 This process can take a while depending the length of the trial, therefore, it is possible to put a debug point in the middle of the execution and run the **spindle** or the **sws** detection from a interim denoised signal depending what the user wants to measure.
 
-**4) Detect Sleep Spindles and SWS**
+**4) Detecting Sleep Spindles and SWS**
 
  In this step we will assume that the **start_param** and **end_param** are the start and end time, **in seconds**, that will be analyzed by the **spindles** and **sws** detectors. These parameters needs to be defined by the hypnogram after the output result is given by the **windowing_sleep_EEG.m** function. The user must define these parameters to evaluate the detectors having the enough amount of signal denoised from the previous step. Take into account that these start and end parameters must be defined by the hypnogram stages start and end respectively. Now, first assume **Sal** as the resulting denoised EEG output then we can define the time-domain vector using the **linspace** command in Matlab.  
 
@@ -122,15 +122,15 @@ The parameters in this function are defined and taken from the function comment 
    
 The output parameters for the spindle detection function are defined here in the following list:
 
- - **timespindles**: cell array with a size equal to number channels and for each channel we have a specific number of spindles detections. In this array we have the time where the spindles started in the time-domain vector.
- - **durspindles**: cell array with a size equal to number channels and for each channel we have a specific number of spindles detections. In this array we have the duration of spindles in seconds.
+ - **timespindles**: cell array with a size equal to number channels and for each channel we have a specific number of spindles detections. In this array we have the time where the **spindles** started in the time-domain vector.
+ - **durspindles**: cell array with a size equal to number channels and for each channel we have a specific number of spindles detections. In this array we have the duration of **spindles** in seconds.
  - **MINS**: number of minutes that the data trial is taken in this analysis, this measure is taken for each channel.
- - **DENS**: Density of spindles detected per each minute across the trial, this measure is calculated for each channel.
- - **time_SS**: a sorted array grouping the spindles starting times detected for each channel. The array is sorted from low to high in seconds reporting the times where the spindles started.
- - **dur_SS**: a sorted array grouping the spindles duration times detected for each channel. The array is sorted from low to high in seconds reporting the spindles duration. The length of time_SS and dur_SS are equal.
- - **dens_SS**: a number representing the density of spindles detected per minute in the entire trial after grouping all the different spindles detected for each channel.
+ - **DENS**: Density of **spindles** detected per each minute across the trial, this measure is calculated for each channel.
+ - **time_SS**: a sorted array grouping the **spindles** starting times detected for each channel. The array is sorted from low to high in seconds reporting the times where the **spindles** started.
+ - **dur_SS**: a sorted array grouping the **spindles** duration times detected for each channel. The array is sorted from low to high in seconds reporting the **spindles** duration. The length of time_SS and dur_SS are equal.
+ - **dens_SS**: a number representing the density of **spindles** detected per minute in the entire trial after grouping all the different **spindles** detected for each channel.
 
-If you want to plot the desired channel parameters with the detected spindles plot on hold you can use the following Matlab command. This occurs when the **sel_plot** parameter is 1.
+If you want to plot the desired channel parameter with the detected spindles plot on hold you can use the following Matlab command. This occurs when the **sel_plot** parameter is 1.
 
 ```matlab
    >> [timespindles,durspindles,MINS,DENS,time_SS,dur_SS,dens_SS]=sleep_spindle_detector_wavelet(Sal(:,start_param*250:end_param*250),times,250,4,1,4,0.3,0.5,11);
@@ -141,10 +141,19 @@ Now, for detecting **SWS** we used the [**swa-matlab**](https://github.com/Mense
    >> [SW,incidence]=detect_sws(Sal(:,start_param*250:end_param*250),times,250,0);
 ```
 
-The input parameters of this function will be listed here as we have set them in the comments section of the corresponding code:
+The input parameters of this function are listed here as we have set them in the comments section of the corresponding code:
 
  - **data**: an array composed of channels (in this case four- 4) x samples-length and it is the fraction of EEG data you want to use to infer where are the sleep spindles.
  - **time**: this is an array of size samples-length having the equivalences in time where the EEG data is defined. This array should be the same length as the size 2 of the EEG data, in this case the **data input parameter.
  - **fs**: sampling frequency being 250Hz for this particular case
- - **sel_plot**: 0 if you don't want to plot the SWS detected holded on your EEG data, and 1 if you want to plot the SWS detected holded on your input EEG data plotted as well.
+ - **sel_plot**: 0 if you don't want to plot the **SWS** detected holded on your EEG data, and 1 if you want to plot the **SWS** detected holded on your input EEG data plotted as well.
 
+The output parameters of this SWS detection function are listed here:
+- **SW**: structure containing the **SWS** canonical representation calculated from the 4 channels and the swa-matlab toolbox.
+-  **incidence**: this is a number representing the number of **SWS** detected per minute across the EEG input given for analysis.
+
+If you want to plot the **SWS** canonical output with the detected **SWS** plotted on hold you can use the following Matlab command. This occurs when the **sel_plot** parameter is 1.
+
+```matlab
+   >> [SW,incidence]=detect_sws(Sal(:,start_param*250:end_param*250),times,250,1);
+```
