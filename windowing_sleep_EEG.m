@@ -25,5 +25,5 @@ function [Sal_filtered,Sal,Result]=windowing_sleep_EEG(name_of_the_file,time_win
    Sal.chanlocs=readlocs('pos_unipolar_dreem.loc');
    Sal.pnts=length(Sal.data);
    Sal.trials=1;
-   %% filter it to detect spindles using Ferrareli et. al algorithm subsequently and the algorithms in Armand Mansen et. al for SWA
+   %% filter it to detect spindles using Ferrareli et. al algorithm subsequently and the algorithms in Armand Mansen et. al for SWA %% don't use it for spindle and swa detection
    Sal_filtered=pop_eegfiltnew(Sal,12,15,8250);
