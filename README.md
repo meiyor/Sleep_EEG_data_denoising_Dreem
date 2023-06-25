@@ -22,7 +22,7 @@ When the plugins are already installed or located in the **plugins** folder insi
 ```matlab
    >> addpath(genpath('where_EEGlab_is_located'));
 ```
-To avoid errors with the octave functions of the **EEGlab** folder, you/user must remove th octave functions inside the **EEGlab** folder from the Matlab path. You/user can follow the following matlab command to remove the octave functions and subdirectories from the Matlab path.
+To avoid errors with the **octave functions** of the **EEGlab** folder, you/user must remove th octave functions inside the **EEGlab** folder from the Matlab path. You/user can follow the following matlab command to remove the octave functions and subdirectories from the Matlab path. You/user need to also remove the **fieldtrip**, go to the **EEGlab** folder and remove the **fieldtrip** folder following a similar command described here. 
 
 
 ```matlab
